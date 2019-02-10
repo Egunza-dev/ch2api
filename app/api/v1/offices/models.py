@@ -26,7 +26,7 @@ class Office:
 
     def __init__(self, office_type, name):
         
-        
+       
         self.office_type = office_type
         self.name = name
         self.id = __class__.offices[-1]["id"] + 1
@@ -44,3 +44,11 @@ class Office:
             if office['id'] == office_id:
                 return [office]
         return None
+
+    def __repr__(self):
+        return {"id":self.id,
+                "type":self.office_type,
+                "name":self.name
+                }
+
+    

@@ -42,6 +42,14 @@ class TestOfficesEndpoints(unittest.TestCase):
         self.assertIn('Secretary of State', str(res.data))
 
 
+    
+    def test_api_raises_error_on_invalid_input(self):
+        """Test endpoints raise error upon provision of invalid input"""
+        res = self.client().post(path='/api/v1/offices/', json=self.office_err, content_type='application/json')
+        self.assertEqual(res.status_code, 400)
+
+
+
 
 if __name__ == "__main__":
     unittest.main()
