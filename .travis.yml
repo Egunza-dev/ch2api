@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.6.7"
+
+notifications:
+  email: false
+  
+# install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install -e .
+
+# run pytest
+script:
+  - pytest 
+
+# then post the results to coveralls
+after_success:
+  - coveralls
