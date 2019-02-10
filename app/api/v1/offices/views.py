@@ -26,3 +26,23 @@ def get_office(office_id):
         "status":200,
         "data":office
     }), 200)
+
+
+
+@api.route('/offices', methods=['POST'], strict_slashes=False)
+def create_office():
+    """Create a political office ."""
+    data =request.get_json(force=True)
+    try:    
+        office = Office(data["type"], data["name"])    
+
+        return make_response(jsonify({
+            "status":201,
+            "data": [{"id":office.id,
+                    "name":office.name }]
+        }), 201)
+    except AssertionError as exception_message:
+        return make_response(jsonify({
+                                        "status":400,
+                                        "error": "{}".format(exception_message)
+                                        }), 400)
