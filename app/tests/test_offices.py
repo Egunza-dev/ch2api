@@ -26,6 +26,17 @@ class TestOfficesEndpoints(unittest.TestCase):
         self.assertIn('President', str(res.data))
 
 
+    def test_api_can_get_office_by_id(self):
+        """Test endpoint that fetches a particular office"""
+
+        res = self.client().get('/api/v1/offices/2')
+        self.assertEqual(res.status_code, 200)
+        self.assertIn('legislative', str(res.data))
+
+
+     
+
+
 
 if __name__ == "__main__":
     unittest.main()
