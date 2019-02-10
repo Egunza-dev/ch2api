@@ -24,4 +24,6 @@ class Office:
     ]
 
 
-    
+    @classmethod
+    def get_offices(cls):
+        return __class__.offices
