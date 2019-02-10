@@ -26,7 +26,7 @@ class Office:
 
     def __init__(self, office_type, name):
         
-        __class__.validate_post(office_type, name)
+       
         self.office_type = office_type
         self.name = name
         self.id = __class__.offices[-1]["id"] + 1
