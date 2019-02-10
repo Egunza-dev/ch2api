@@ -11,3 +11,18 @@ def get_offices():
         "status":200,
         "data":offices
     }), 200)
+
+
+@api.route('/offices/<int:office_id>', methods=['GET'], strict_slashes=False)
+def get_office(office_id):
+    """Fetch a specific political office record."""
+    office = Office.get_office(office_id)
+    if office == None:
+        return make_response(jsonify({
+        "status":404,
+        "error":"The office does not exist on the Politico platform."
+        }), 404)
+    return make_response(jsonify({
+        "status":200,
+        "data":office
+    }), 200)

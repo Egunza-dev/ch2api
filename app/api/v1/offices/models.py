@@ -27,3 +27,11 @@ class Office:
     @classmethod
     def get_offices(cls):
         return __class__.offices
+
+
+    @classmethod
+    def get_office(cls, office_id):
+        for office in __class__.offices:
+            if office['id'] == office_id:
+                return [office]
+        return None

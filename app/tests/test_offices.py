@@ -34,9 +34,6 @@ class TestOfficesEndpoints(unittest.TestCase):
         self.assertIn('legislative', str(res.data))
 
 
-     
-
-
 
 if __name__ == "__main__":
     unittest.main()
