@@ -33,6 +33,14 @@ class TestOfficesEndpoints(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn('legislative', str(res.data))
 
+    
+    def test_api_can_create_office(self):
+        """Test endpoint that posts a particular office"""
+
+        res = self.client().post(path='/api/v1/offices/', json=self.office, content_type='application/json')
+        self.assertEqual(res.status_code, 201)
+        self.assertIn('Secretary of State', str(res.data))
+
 
 
 if __name__ == "__main__":
