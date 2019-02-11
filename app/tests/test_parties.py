@@ -32,3 +32,12 @@ class TestPartiesEndpoints(unittest.TestCase):
         res = self.client().get(path='/api/v1/parties/', content_type='application/json')
         self.assertEqual(res.status_code, 200)
         self.assertIn('Democratic Party', str(res.data))
+
+
+    def test_api_can_get_party_by_id(self):
+        """Test endpoint that fetches a particular party"""
+
+        res = self.client().get('/api/v1/parties/1')
+        self.assertEqual(res.status_code, 200)
+        self.assertIn('Democratic Party', str(res.data))
+
