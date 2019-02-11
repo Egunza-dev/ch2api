@@ -32,3 +32,11 @@ class Party:
     @classmethod
     def get_parties(cls):
         return __class__.parties
+
+
+    @classmethod
+    def get_party(cls, party_id):
+        for party in __class__.parties:
+            if party['id'] == party_id:
+                return [party]
+        return None
