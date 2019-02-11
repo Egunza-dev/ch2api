@@ -41,3 +41,11 @@ class TestPartiesEndpoints(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn('Democratic Party', str(res.data))
 
+
+    def test_api_can_create_party(self):
+        """Test endpoint that posts a particular party"""
+        
+        res = self.client().post('/api/v1/parties/', json=self.party)
+        self.assertEqual(res.status_code, 201)
+        self.assertIn('UCL Party', str(res.data))
+
