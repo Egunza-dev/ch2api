@@ -26,3 +26,9 @@ class Party:
                 }
 
     ]
+
+
+
+    @classmethod
+    def get_parties(cls):
+        return __class__.parties
