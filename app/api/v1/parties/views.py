@@ -26,3 +26,26 @@ def get_party(party_id):
         "status":200,
         "data":party
     }), 200)
+
+
+
+@api.route('/parties', methods=['POST'], strict_slashes=False)
+def create_party():
+    """Create a political party."""
+    data =request.get_json(force=True)
+    name = data["name"]
+    hqAddress = data["hqAddress"]
+    logoUrl = data["logoUrl"]
+    try: 
+        party = Party(name, hqAddress, logoUrl)
+        
+        return make_response(jsonify({
+            "status":201,
+            "data": [{"id":party.id,
+                    "name":party.name }]
+        }), 201)
+    except AssertionError as exception_message:
+        return make_response(jsonify({
+                                        "status":400,
+                                        "error": "{}".format(exception_message)
+                                        }), 400)

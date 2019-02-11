@@ -28,6 +28,16 @@ class Party:
     ]
 
 
+    def __init__(self, name, hqAddress, logoUrl):
+
+        
+        self.name = name
+        self.hqAddress = hqAddress
+        self.logoUrl = logoUrl
+        self.id = __class__.parties[-1]["id"] + 1
+        __class__.parties.append(self.__repr__())
+
+
 
     @classmethod
     def get_parties(cls):
@@ -40,3 +50,12 @@ class Party:
             if party['id'] == party_id:
                 return [party]
         return None
+
+
+
+    def __repr__(self):
+        return {"id":self.id,
+                "hqAddress":self.hqAddress,
+                "name":self.name,
+                "logoUrl":self.logoUrl
+                }
