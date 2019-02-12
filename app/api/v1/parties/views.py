@@ -49,3 +49,29 @@ def create_party():
                                         "status":400,
                                         "error": "{}".format(exception_message)
                                         }), 400)
+
+
+@api.route('/parties/<int:party_id>/name', methods=['PATCH'], strict_slashes=False)
+def edit_party(party_id):
+    """Edit the name of a specific political party."""
+    data =request.get_json(force=True)
+
+    try:
+        party = Party.edit_name(party_id, data["name"])
+        
+        if party != None:        
+            return make_response(jsonify({
+                "status":200,
+                "data": [{"id":party[0]["id"],
+                        "name":party[0]["name"] }]
+                }), 200)
+
+        return make_response(jsonify({
+        "status":404,
+        "error":"The party does not exist on the Politico platform."
+        }), 404)
+    except AssertionError as exception_message:
+        return make_response(jsonify({
+                                        "status":400,
+                                        "error": "{}".format(exception_message)
+                                        }), 400)
