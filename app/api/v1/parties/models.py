@@ -1,79 +1,63 @@
-class Party:
- 
-    parties = [{
-                "id" : 1 ,
-                "name" : "Democratic Party" ,
-                "hqAddress" : "Washington Dc" ,
-                "logoUrl" : ""
-                },
-                {
-                "id" : 2,
-                "name": "Republican Party" ,
-                "hqAddress" : "New York" ,
-                "logoUrl" : ""
-                },
-                {
-                "id": 3 ,
-                "name" : "Conservative Party" ,
-                "hqAddress" : "Chicago" ,
-                "logoUrl" : ""
-                },
-                {
-                "id" : 4 ,
-                "name" : "Labour Party" ,
-                "hqAddress" : "Illinois" ,
-                "logoUrl" : ""
-                }
 
-    ]
+parties=[]
+
+class Party: 
 
 
-    def __init__(self, name, hqAddress, logoUrl):
+    def __init__(self):
+        self.parties=parties
+
+    
+    
+    def post_party(self, name, hqAddress, logoUrl):
 
         
-        self.name = name
-        self.hqAddress = hqAddress
-        self.logoUrl = logoUrl
-        self.id = __class__.parties[-1]["id"] + 1
-        __class__.parties.append(self.__repr__())
+        party = {
+            "id": len(self.parties) + 1,
+            "name": name,
+            "hqAddress": hqAddress,
+            "logoUrl": logoUrl
+        }
+        
+        self.parties.append(party)
+        return party
 
 
 
-    @classmethod
-    def get_parties(cls):
-        return __class__.parties
+    
+    def get_parties(self):
+        return self.parties
 
 
-    @classmethod
-    def get_party(cls, party_id):
-        for party in __class__.parties:
+    
+    def get_party(self, party_id):
+        for party in self.parties:
             if party['id'] == party_id:
                 return [party]
         return None
 
-    @classmethod
-    def edit_name(cls, party_id, name):
 
+    
+    
+    def edit_name(self, party_id, name):
         
-        for party in __class__.parties:
+        for party in self.parties:
             if party["id"] == party_id:
                 party["name"] = name
                 return [party]
         return None  
 
-    @classmethod
-    def delete_party(cls, party_id):
-        for party in __class__.parties:
+    
+    def delete_party(self, party_id):
+        for party in self.parties:
             if party['id'] == party_id:
-                 __class__.parties.remove(party)
+                 self.parties.remove(party)
                  return True
         return False
 
 
+    
 
-    def __repr__(self):
-        return {"id":self.id,
-                "hqAddress":self.hqAddress,
-                "name":self.name,
-                "logoUrl":self.logoUrl
-                }
+
+
+    

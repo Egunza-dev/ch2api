@@ -24,30 +24,66 @@ class TestPartiesEndpoints(unittest.TestCase):
 
         self.party_name = {"name":"Liberal Party"}
         self.party_edit_err = {"name":""}
+        self.parties = [{
+                
+                "name" : "Democratic Party" ,
+                "hqAddress" : "Washington Dc" ,
+                "logoUrl" : "buf.jpeg"
+                },
+                {
+                
+                "name": "Republican Party" ,
+                "hqAddress" : "New York" ,
+                "logoUrl" : "rudolf.jpg"
+                },
+                {
+                
+                "name" : "Conservative Party" ,
+                "hqAddress" : "Chicago" ,
+                "logoUrl" : "zing.jpg"
+                },
+                {
+                
+                "name" : "Labour Party" ,
+                "hqAddress" : "Illinois" ,
+                "logoUrl" : "hur.png"
+                }
+
+    ]
 
 
     def test_api_can_get_all_parties(self):
         """Test endpoint that fetches all parties"""
 
-        res = self.client().get(path='/api/v1/parties/', content_type='application/json')
-        self.assertEqual(res.status_code, 200)
-        self.assertIn('Democratic Party', str(res.data))
-
+        post_res = [None] * len(self.parties)
+        for i in range(len(self.parties)):
+            post_res[i] = self.client().post('/api/v1/parties/', json=self.parties[i])
+        get_res = self.client().get('/api/v1/parties/')
+        
+        self.assertEqual(get_res.json["data"][0]["name"], self.parties[0]["name"])
+        self.assertEqual(get_res.status_code, 200)
+            
+        
 
     def test_api_can_get_party_by_id(self):
         """Test endpoint that fetches a particular party"""
 
-        res = self.client().get('/api/v1/parties/1')
-        self.assertEqual(res.status_code, 200)
-        self.assertIn('Democratic Party', str(res.data))
+        post_res = self.client().post('/api/v1/parties/', json=self.party)
+        party_id = int(post_res.json['data'][0]["id"])
+        get_res = self.client().get('/api/v1/parties/{}'.format(party_id))
+        self.assertEqual(post_res.json["data"][0]["id"], get_res.json["data"][0]["id"])
+        self.assertEqual(get_res.json["status"], 200)
 
 
     def test_api_can_create_party(self):
         """Test endpoint that posts a particular party"""
+
+        post_res = self.client().post('/api/v1/parties/', json=self.party)
+        party_id = int(post_res.json['data'][0]["id"])
+        get_res = self.client().get('/api/v1/parties/{}'.format(party_id))
+        self.assertEqual(post_res.json["data"][0]["name"], get_res.json["data"][0]["name"])
+        self.assertEqual(post_res.json["status"], 201)
         
-        res = self.client().post('/api/v1/parties/', json=self.party)
-        self.assertEqual(res.status_code, 201)
-        self.assertIn('UCL Party', str(res.data))
 
     def test_api_can_edit_party(self):
         """Test endpoint that edits a particular party"""
@@ -58,6 +94,7 @@ class TestPartiesEndpoints(unittest.TestCase):
         get_res = self.client().get('/api/v1/parties/{}'.format(party_id))
         self.assertEqual(patch_res.json["data"][0]["name"], get_res.json["data"][0]["name"])
         self.assertEqual(patch_res.status_code, 200) 
+
 
 
     def test_party_deletion(self):
