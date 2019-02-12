@@ -75,3 +75,20 @@ def edit_party(party_id):
                                         "status":400,
                                         "error": "{}".format(exception_message)
                                         }), 400)
+                                        
+
+@api.route('/parties/<int:party_id>/', methods=['DELETE'], strict_slashes=False)
+def delete_party(party_id):
+    """Delete a specific political party."""
+    
+    if Party.delete_party(party_id) != True:
+        return make_response(jsonify({
+        "status":404,
+        "error":"The party does not exist on the Politico platform."
+    }), 404)
+
+   
+    return make_response(jsonify({
+        "status":200,
+        "data":[{"message":"The political party was successfully deleted from the platform."}]
+    }), 200)
