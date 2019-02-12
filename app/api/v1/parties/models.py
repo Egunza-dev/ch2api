@@ -51,6 +51,16 @@ class Party:
                 return [party]
         return None
 
+    @classmethod
+    def edit_name(cls, party_id, name):
+
+        
+        for party in __class__.parties:
+            if party["id"] == party_id:
+                party["name"] = name
+                return [party]
+        return None  
+
 
 
     def __repr__(self):
