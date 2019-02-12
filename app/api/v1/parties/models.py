@@ -61,6 +61,14 @@ class Party:
                 return [party]
         return None  
 
+    @classmethod
+    def delete_party(cls, party_id):
+        for party in __class__.parties:
+            if party['id'] == party_id:
+                 __class__.parties.remove(party)
+                 return True
+        return False
+
 
 
     def __repr__(self):
