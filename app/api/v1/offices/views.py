@@ -68,7 +68,6 @@ def validate_post(office_type, name):
             raise AssertionError("Office type should be a string!")
         elif any(office['name'] == name for office in offices):
             raise AssertionError("That office already exists!")
-        elif any(office['name'] == name for office in offices):
-            raise AssertionError("That office already exists!")
+        
         
         

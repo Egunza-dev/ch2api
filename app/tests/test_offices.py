@@ -44,7 +44,7 @@ class TestOfficesEndpoints(unittest.TestCase):
         for i in range(len(self.offices)):
             post_res[i] = self.client().post('/api/v1/offices/', json=self.offices[i])
         get_res = self.client().get('/api/v1/offices/')     
-        
+        self.assertIn(self.offices[3]["name"], str(get_res.data))
         self.assertEqual(get_res.status_code, 200)
         
 
@@ -53,7 +53,7 @@ class TestOfficesEndpoints(unittest.TestCase):
         """Test endpoint that fetches a particular office"""
 
         post_res = self.client().post('/api/v1/offices/', json=self.office)
-        office_id = int(post_res.json['data'][0]["id"])
+        office_id = int(post_res.json['data'][0]["id"])         
         get_res = self.client().get('/api/v1/offices/{}'.format(office_id))
         self.assertEqual(post_res.json["data"][0]["id"], get_res.json["data"][0]["id"])
         self.assertEqual(get_res.json["status"], 200)
@@ -70,11 +70,12 @@ class TestOfficesEndpoints(unittest.TestCase):
 
 
     
-    def test_api_raises_error_on_invalid_input(self):
-        """Test endpoints raise error upon provision of invalid input"""
-        res = self.client().post(path='/api/v1/offices/', json=self.office_err, content_type='application/json')
-        self.assertEqual(res.status_code, 400)
-
+    
+    def tearDown(self):
+        super(TestOfficesEndpoints, self).tearDown()
+        del self.office
+        del self.office_err
+        del self.offices
 
 
 
